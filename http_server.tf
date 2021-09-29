@@ -12,5 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-variable "project" {}
+module "http_server" {
+  
+  source  = "./modules/http_server"
+ 
+  project = var.project
+  region = var.region
+  subnet-name  = module.vpc.subnet-name
+  vpc-name  = module.vpc.subnet-name
+}

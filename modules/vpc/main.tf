@@ -13,22 +13,18 @@
 # limitations under the License.
 
 
-module "vpc" {
-  source  = "terraform-google-modules/network/google"
-  version = "3.3.0"
+resource "google_compute_network" "vpc" {
+  project                 = var.project
+  name                    = var.vpc-name
+  auto_create_subnetworks = var.auto-create-subnetworks
+}
 
-  project_id   = "${var.project}"
-  network_name = "${var.env}"
+resource "google_compute_subnetwork" "subnetwork" {
 
-  subnets = [
-    {
-      subnet_name   = "${var.env}-subnet-01"
-      subnet_ip     = "10.${var.env == "dev" ? 10 : 20}.10.0/24"
-      subnet_region = "us-west1"
-    },
-  ]
+  name                     = "my-subnet"
+  ip_cidr_range            = var.subnet-cidr-range
+  region                   = var.region
+  network                  = google_compute_network.vpc.name
+  private_ip_google_access = true
 
-  secondary_ranges = {
-    "${var.env}-subnet-01" = []
-  }
 }

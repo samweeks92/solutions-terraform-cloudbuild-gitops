@@ -12,5 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+module "vpc" {
+  
+  source  = "./modules/vpc"
+  
+  project = var.project
+  vpc-name = "tf-vpc"
+  subnet-cidr-range  = "10.5.0.0/16"
+  region = var.region
+  auto-create-subnetworks       = false
 
-variable "project" {}
+}

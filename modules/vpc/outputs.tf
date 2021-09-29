@@ -13,10 +13,22 @@
 # limitations under the License.
 
 
-output "network" {
-  value = "${module.vpc.network_name}"
+// Output the VPC Name
+output "vpc-name" {
+  value = google_compute_network.vpc.name
 }
 
-output "subnet" {
-  value = "${element(module.vpc.subnets_names, 0)}"
+// Output the Self Link URL
+output "vpc-self-link" {
+  value = google_compute_network.vpc.self_link
+}
+
+// Output the Self Link URL
+output "vpc-id" {
+  value = google_compute_network.vpc.id
+}
+
+// Output the subnet Name
+output "subnet-name" {
+  value = google_compute_subnetwork.subnetwork.name
 }

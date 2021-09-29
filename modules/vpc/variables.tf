@@ -13,5 +13,28 @@
 # limitations under the License.
 
 
-variable "project" {}
-variable "env" {}
+variable "project" {
+  type        = string
+  description = "The GCP Project name to use for the VPC deployment"
+}
+
+variable "region" {
+  type        = string
+  description = "The GCP Region to deploy the Kubernetes Cluster in"
+}
+
+
+variable "vpc-name" {
+  type        = string
+  description = "The name to use for the created VPC"
+}
+
+variable "subnet-cidr-range" {
+  type        = string
+  description = "The CIDR range to use for the GKE Subnet"
+}
+
+variable "auto-create-subnetworks" {
+  type        = bool
+  description = "Should subnets automatically be created when creating the VPC? This should almost always be false"
+}

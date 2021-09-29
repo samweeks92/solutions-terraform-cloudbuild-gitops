@@ -1,0 +1,10 @@
+description: Configuration for the shared-vpc-demo
+filename: cloudbuild.yaml
+name: shared-vpc-demo
+substitutions:
+  _HOST_PROJECT_: hostproject-svpc-01
+  _PROJECT_: serviceproject02-svpc-01
+triggerTemplate:
+  branchName: ^master$
+  projectId: sam-sandbox-243911
+  repoName: github_samweeks92_solutions-terraform-cloudbuild-gitops

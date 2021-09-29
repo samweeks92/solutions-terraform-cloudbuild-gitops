@@ -12,18 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-locals {
-  network = "${element(split("-", var.subnet), 0)}"
-}
-
 resource "google_compute_instance" "http_server" {
-  project      = "${var.project}"
-  zone         = "us-west1-a"
-  name         = "${local.network}-apache2-instance"
+  project      = var.project
+  zone         = "${var.region}-a"
+  name         = "apache2-instance"
   machine_type = "f1-micro"
 
-  metadata_startup_script = "sudo apt-get update && sudo apt-get install apache2 -y && echo '<html><body><h1>Environment: ${local.network}</h1></body></html>' | sudo tee /var/www/html/index.html"
+  metadata_startup_script = "sudo apt-get update && sudo apt-get install apache2 -y && echo '<html><body><h1>Environment: ${var.vpc-name}</h1></body></html>' | sudo tee /var/www/html/index.html"
 
   boot_disk {
     initialize_params {
@@ -32,7 +27,7 @@ resource "google_compute_instance" "http_server" {
   }
 
   network_interface {
-    subnetwork = "${var.subnet}"
+    subnetwork = var.subnet-name
 
     access_config {
       # Include this section to give the VM an external ip address
@@ -40,5 +35,5 @@ resource "google_compute_instance" "http_server" {
   }
 
   # Apply the firewall rule to allow external IPs to access this instance
-  tags = ["http-server"]
+  tags = ["http-server2"]
 }
