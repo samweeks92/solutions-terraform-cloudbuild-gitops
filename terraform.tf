@@ -18,7 +18,9 @@ terraform {
     bucket = "terraform-shared-vpc-demo-tfstate"
   }
   required_providers {
-    source = "hashicorp/google"
-    version = "~> 3.66"
+    google = {
+      source = "hashicorp/google"
+      version = "~> 3.66"
+    }
   }
 }
