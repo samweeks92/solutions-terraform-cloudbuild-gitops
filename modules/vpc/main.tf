@@ -56,6 +56,18 @@ resource "google_compute_subnetwork_iam_member" "gke-subnet-member-container-eng
   member = "serviceAccount:service-473776704087@container-engine-robot.iam.gserviceaccount.com"
 }
 
+resource "google_project_iam_member" "host-project-compute-security-admin" {
+  project = var.host-project
+  role    = "roles/compute.securityAdmin"
+  member  = "serviceAccount:service-473776704087@container-engine-robot.iam.gserviceaccount.com"
+}
+
+resource "google_project_iam_member" "host-project-host-service-agent-user" {
+  project = var.host-project
+  role    = "roles/container.hostServiceAgentUser"
+  member  = "serviceAccount:service-473776704087@container-engine-robot.iam.gserviceaccount.com"
+}
+
 resource "google_compute_subnetwork" "http-server-subnet" {
   name                     = "http-server-subnet"
   project                  = var.host-project
