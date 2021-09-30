@@ -22,6 +22,7 @@ resource "google_compute_network" "vpc" {
 resource "google_compute_subnetwork" "gke-subnet" {
 
   name                     = "gke-subnet"
+  project                  = var.host-project
   ip_cidr_range            = var.gke-subnet-cidr-range
   region                   = var.region
   network                  = google_compute_network.vpc.name
@@ -30,6 +31,7 @@ resource "google_compute_subnetwork" "gke-subnet" {
 
 resource "google_compute_subnetwork" "http-server-subnet" {
   name                     = "http-server-subnet"
+  project                  = var.host-project
   ip_cidr_range            = var.http-server-subnet-cidr-range
   region                   = var.region
   network                  = google_compute_network.vpc.name

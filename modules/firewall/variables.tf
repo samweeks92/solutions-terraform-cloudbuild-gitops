@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-variable "service-project" {
+variable "host-project" {
   type        = string
   description = "The GCP Project name to use for the VPC deployment"
 }
