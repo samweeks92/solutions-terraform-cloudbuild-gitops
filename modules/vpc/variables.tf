@@ -39,7 +39,7 @@ variable "http-server-subnet-cidr-range" {
   description = "The CIDR range to use for the GKE Subnet"
 }
 
-variable "auto-create-subnetworks" {
-  type        = bool
-  description = "Should subnets automatically be created when creating the VPC? This should almost always be false"
+variable "k8s-sa-email" {
+    type    = string
+    description = "kubernetes service account email"
 }

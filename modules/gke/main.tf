@@ -2,102 +2,74 @@
  * Copyright 2021 Google LLC
  */
 
+#k8s service account
+resource "google_service_account" "k8s" {
+  project    = var.service-project
+  account_id = "k8s-sa"
+}
 
 # Create the GKE Cluster
-resource "google_container_cluster" "gke-cluster" {
+resource "google_container_cluster" "gke" {
+  name     = var.cluster-name
+  location = var.region
+  project  = var.service-project
 
-  // Temporarily use the google-beta provider as networking_mode is a beta flag
-  provider = google-beta
+  networking_mode = "VPC_NATIVE"
+  network         = var.vpc-name
+  subnetwork      = var.gke-subnet-name
 
-  project                   = var.service-project
-  name                      = var.cluster-name
-  location                  = var.region
-  default_max_pods_per_node = var.max-pods-per-node
-  network                   = var.vpc-name
-  networking_mode           = "VPC_NATIVE"
-  remove_default_node_pool  = true
-  initial_node_count        = 1
-  subnetwork                = var.gke-subnet-name
+  remove_default_node_pool = true
+  initial_node_count       = 1
+
+  release_channel {
+    channel = "REGULAR"
+  }
 
   ip_allocation_policy {
     cluster_secondary_range_name  = var.gke-secondary-pods-range-name
     services_secondary_range_name = var.gke-secondary-services-range-name
   }
 
-  master_authorized_networks_config {
-
-    // Dynamically populate from input map
-    dynamic "cidr_blocks" {
-      for_each = var.master-authorised-networks-list
-      content {
-        cidr_block   = cidr_blocks.value
-        display_name = cidr_blocks.key
-      }
-    }
-
+  network_policy {
+    provider = "PROVIDER_UNSPECIFIED"
+    enabled  = true
   }
 
   private_cluster_config {
-    enable_private_nodes    = var.enable-private-nodes
-    enable_private_endpoint = var.enable-private-endpoint
-    master_ipv4_cidr_block  = var.master-ipv4-cidr-range
-
-    master_global_access_config {
-      enabled = var.enable-private-endpoint
-    }
-
+    enable_private_endpoint = false
+    enable_private_nodes    = true
+    master_ipv4_cidr_block  = "172.16.0.0/28"
   }
 
-  release_channel {
-    channel = var.release-channel
-  }
-
-#   workload_identity_config {
-#     identity_namespace = "${var.service-project}.svc.id.goog"
-#   }
-
-  addons_config {
-
-    horizontal_pod_autoscaling {
-      disabled = var.disable-hpa
-    }
-
-    http_load_balancing {
-      disabled = var.disable-http-load-balancing
-    }
-
+  workload_identity_config {
+    identity_namespace = "${var.service-project}.svc.id.goog"
   }
 
 }
 
-# Add the primary NodePool
-resource "google_container_node_pool" "linux-nodepool" {
+resource "google_container_node_pool" "linux-vm" {
+  name       = "linux-vm"
+  location   = var.region
+  cluster    = google_container_cluster.gke.name
+  project    = var.service-project
+  node_count = 1
 
-  name     = "linux-nodepool"
-  location = var.region
-
-  autoscaling {
-    min_node_count = var.autoscaling-min-nodes
-    max_node_count = var.autoscaling-max-nodes
+  management {
+    auto_repair  = true
+    auto_upgrade = true
   }
 
-  initial_node_count = (var.autoscaling-min-nodes / 3)
-  max_pods_per_node  = var.max-pods-per-node
-  cluster            = google_container_cluster.gke-cluster.name
-
   node_config {
-    preemptible  = false
-    machine_type = var.node-machine-type
+    labels = {
+      role = "linux"
+    }
+    machine_type = "e2-medium"
+
+    service_account = google_service_account.k8s.email
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
   }
-
-  upgrade_settings {
-    max_surge       = 1
-    max_unavailable = 0
-  }
-
 }
 
 # Run this local-exec on every single run to generate Kubectl credentials

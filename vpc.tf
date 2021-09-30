@@ -18,9 +18,9 @@ module "vpc" {
   
   host-project                  = var.host-project
   vpc-name                      = "tf-shared-vpc"
-  gke-subnet-cidr-range         = "10.5.0.0/16"
+  gke-subnet-cidr-range         = "10.5.0.0/20"
   http-server-subnet-cidr-range = "10.6.0.0/24"
   region                        = var.region
-  auto-create-subnetworks       = false
+  k8s-sa-email                  = module.gke.k8s-sa-email
 
 }
