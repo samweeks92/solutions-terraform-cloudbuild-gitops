@@ -52,9 +52,9 @@ resource "google_container_cluster" "gke-cluster" {
     channel = var.release-channel
   }
 
-  workload_identity_config {
-    identity_namespace = "${var.service-project}.svc.id.goog"
-  }
+#   workload_identity_config {
+#     identity_namespace = "${var.service-project}.svc.id.goog"
+#   }
 
   addons_config {
 
@@ -101,16 +101,16 @@ resource "google_container_node_pool" "linux-nodepool" {
 }
 
 # Run this local-exec on every single run to generate Kubectl credentials
-resource "null_resource" "kube-creds" {
+# resource "null_resource" "kube-creds" {
 
-  depends_on = [google_container_cluster.gke-cluster]
+#   depends_on = [google_container_cluster.gke-cluster]
 
-  triggers = {
-    always_run = timestamp()
-  }
+#   triggers = {
+#     always_run = timestamp()
+#   }
 
-  provisioner "local-exec" {
-    command = "gcloud container clusters get-credentials ${google_container_cluster.gke-cluster.name} --region=${google_container_cluster.gke-cluster.location} --project=${var.service-project}"
-  }
+#   provisioner "local-exec" {
+#     command = "gcloud container clusters get-credentials ${google_container_cluster.gke-cluster.name} --region=${google_container_cluster.gke-cluster.location} --project=${var.service-project}"
+#   }
 
-}
+# }
