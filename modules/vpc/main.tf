@@ -13,10 +13,11 @@
 # limitations under the License.
 
 
-resource "google_compute_network" "vpc" {
+resource "google_compute_network" "tf-shared-vpc" {
   project                 = var.host-project
   name                    = var.vpc-name
   auto_create_subnetworks = var.auto-create-subnetworks
+  routing_mode            = "GLOBAL"
 }
 
 resource "google_compute_subnetwork" "gke-subnet" {
@@ -25,8 +26,24 @@ resource "google_compute_subnetwork" "gke-subnet" {
   project                  = var.host-project
   ip_cidr_range            = var.gke-subnet-cidr-range
   region                   = var.region
-  network                  = google_compute_network.vpc.name
+  network                  = google_compute_network.tf-shared-vpc.name
   private_ip_google_access = true
+}
+
+resource "google_compute_subnetwork_iam_member" "gke-subnet-member-cloudservices" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.gke-subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:473776704087@cloudservices.gserviceaccount.com"
+}
+
+resource "google_compute_subnetwork_iam_member" "gke-subnet-member-container-engine" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.gke-subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:473776704087@container-engine-robot.iam.gserviceaccount.com"
 }
 
 resource "google_compute_subnetwork" "http-server-subnet" {
@@ -34,7 +51,22 @@ resource "google_compute_subnetwork" "http-server-subnet" {
   project                  = var.host-project
   ip_cidr_range            = var.http-server-subnet-cidr-range
   region                   = var.region
-  network                  = google_compute_network.vpc.name
+  network                  = google_compute_network.tf-shared-vpc.name
   private_ip_google_access = true
+}
 
+resource "google_compute_subnetwork_iam_member" "http-server-member-cloudservices" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.http-server-subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:473776704087@cloudservices.gserviceaccount.com"
+}
+
+resource "google_compute_subnetwork_iam_member" "http-server-subnet-member-container-engine" {
+  project = var.host-project
+  region = var.region
+  subnetwork = google_compute_subnetwork.http-server-subnet.name
+  role = "roles/compute.networkUser"
+  member = "serviceAccount:473776704087@container-engine-robot.iam.gserviceaccount.com"
 }

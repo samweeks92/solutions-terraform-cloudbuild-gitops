@@ -15,7 +15,7 @@
 
 // Output the VPC Name
 output "vpc-name" {
-  value = google_compute_network.vpc.name
+  value = google_compute_network.tf-shared-vpc.name
 }
 
 // Output the Self Link URL
