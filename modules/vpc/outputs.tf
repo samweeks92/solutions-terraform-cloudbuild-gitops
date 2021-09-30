@@ -20,12 +20,12 @@ output "vpc-name" {
 
 // Output the Self Link URL
 output "vpc-self-link" {
-  value = google_compute_network.vpc.self_link
+  value = google_compute_network.tf-shared-vpc.self_link
 }
 
 // Output the vpc id
 output "vpc-id" {
-  value = google_compute_network.vpc.id
+  value = google_compute_network.tf-shared-vpc.id
 }
 
 // Output the gke subnet name
