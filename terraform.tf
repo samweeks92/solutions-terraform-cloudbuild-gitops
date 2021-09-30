@@ -17,4 +17,8 @@ terraform {
   backend "gcs" {
     bucket = "terraform-shared-vpc-demo-tfstate"
   }
+  required_providers {
+    source = "hashicorp/google"
+    version = "~> 3.66"
+  }
 }
