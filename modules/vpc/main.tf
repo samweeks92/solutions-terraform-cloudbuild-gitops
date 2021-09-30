@@ -38,13 +38,13 @@ resource "google_compute_subnetwork_iam_member" "gke-subnet-member-cloudservices
   member = "serviceAccount:473776704087@cloudservices.gserviceaccount.com"
 }
 
-resource "google_compute_subnetwork_iam_member" "gke-subnet-member-container-engine" {
-  project = var.host-project
-  region = var.region
-  subnetwork = google_compute_subnetwork.gke-subnet.name
-  role = "roles/compute.networkUser"
-  member = "serviceAccount:473776704087@container-engine-robot.iam.gserviceaccount.com"
-}
+# resource "google_compute_subnetwork_iam_member" "gke-subnet-member-container-engine" {
+#   project = var.host-project
+#   region = var.region
+#   subnetwork = google_compute_subnetwork.gke-subnet.name
+#   role = "roles/compute.networkUser"
+#   member = "serviceAccount:473776704087@container-engine-robot.iam.gserviceaccount.com"
+# }
 
 resource "google_compute_subnetwork" "http-server-subnet" {
   name                     = "http-server-subnet"
@@ -63,10 +63,10 @@ resource "google_compute_subnetwork_iam_member" "http-server-member-cloudservice
   member = "serviceAccount:473776704087@cloudservices.gserviceaccount.com"
 }
 
-resource "google_compute_subnetwork_iam_member" "http-server-subnet-member-container-engine" {
-  project = var.host-project
-  region = var.region
-  subnetwork = google_compute_subnetwork.http-server-subnet.name
-  role = "roles/compute.networkUser"
-  member = "serviceAccount:473776704087@container-engine-robot.iam.gserviceaccount.com"
-}
+# resource "google_compute_subnetwork_iam_member" "http-server-subnet-member-container-engine" {
+#   project = var.host-project
+#   region = var.region
+#   subnetwork = google_compute_subnetwork.http-server-subnet.name
+#   role = "roles/compute.networkUser"
+#   member = "serviceAccount:473776704087@container-engine-robot.iam.gserviceaccount.com"
+# }

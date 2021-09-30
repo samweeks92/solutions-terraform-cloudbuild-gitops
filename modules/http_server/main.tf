@@ -27,6 +27,7 @@ resource "google_compute_instance" "http_server" {
   }
 
   network_interface {
+    network = var.vpc-name
     subnetwork = var.http-server-subnet-name
 
     access_config {
