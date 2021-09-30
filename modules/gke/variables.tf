@@ -29,11 +29,6 @@ variable "gke-subnet-name" {
   description = "The name to use for the GKE Subnet"
 }
 
-variable "gke-subnet-cidr-range" {
-  type        = string
-  description = "The CIDR range to use for the GKE Subnet"
-}
-
 variable "gke-secondary-pods-range-name" {
   type        = string
   description = "The CIDR Range name to use for GKE Pods (VPC Native Networking)"
