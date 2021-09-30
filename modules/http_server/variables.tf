@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-variable "project" {
+variable "service-project" {
   type        = string
   description = "The GCP Project name to use for the VPC deployment"
 }
@@ -28,7 +28,7 @@ variable "vpc-name" {
   description = "The name of the network to use"
 }
 
-variable "subnet-name" {
+variable "http-server-subnet-name" {
   type        = string
   description = "The name of the subnetwork to use"
 }

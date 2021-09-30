@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-variable "project" {
+variable "host-project" {
   type        = string
   description = "The GCP Project name to use for the VPC deployment"
 }
@@ -29,7 +29,12 @@ variable "vpc-name" {
   description = "The name to use for the created VPC"
 }
 
-variable "subnet-cidr-range" {
+variable "gke-subnet-cidr-range" {
+  type        = string
+  description = "The CIDR range to use for the GKE Subnet"
+}
+
+variable "http-server-subnet-cidr-range" {
   type        = string
   description = "The CIDR range to use for the GKE Subnet"
 }

@@ -14,12 +14,13 @@
 
 module "vpc" {
   
-  source  = "./modules/vpc"
+  source                      = "./modules/vpc"
   
-  project = var.project
-  vpc-name = "tf-vpc"
-  subnet-cidr-range  = "10.5.0.0/16"
-  region = var.region
+  host-project                  = var.host-project
+  vpc-name                      = "tf-vpc"
+  gke-subnet-cidr-range         = "10.5.0.0/16"
+  http-server-subnet-cidr-range = "10.6.0.0/24"
+  region                        = var.region
   auto-create-subnetworks       = false
 
 }

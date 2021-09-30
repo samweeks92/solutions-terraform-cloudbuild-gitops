@@ -15,7 +15,7 @@
 resource "google_compute_firewall" "allow-http" {
   name    = "${var.vpc-name}-allow-http"
   network = var.vpc-name
-  project = var.project
+  project = var.service-project
 
   allow {
     protocol = "tcp"

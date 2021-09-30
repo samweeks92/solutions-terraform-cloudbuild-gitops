@@ -16,7 +16,6 @@ module "firewall" {
   
   source  = "./modules/firewall"
 
-  project = var.project
-  subnet-name  = module.vpc.subnet-name
-  vpc-name = module.vpc.vpc-name
+  service-project = var.service-project
+  vpc-name        = module.vpc.vpc-name
 }

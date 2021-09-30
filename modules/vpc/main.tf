@@ -14,15 +14,23 @@
 
 
 resource "google_compute_network" "vpc" {
-  project                 = var.project
+  project                 = var.host-project
   name                    = var.vpc-name
   auto_create_subnetworks = var.auto-create-subnetworks
 }
 
-resource "google_compute_subnetwork" "subnetwork" {
+resource "google_compute_subnetwork" "gke-subnet" {
 
-  name                     = "my-subnet"
-  ip_cidr_range            = var.subnet-cidr-range
+  name                     = "gke-subnet"
+  ip_cidr_range            = var.gke-subnet-cidr-range
+  region                   = var.region
+  network                  = google_compute_network.vpc.name
+  private_ip_google_access = true
+}
+
+resource "google_compute_subnetwork" "http-server-subnet" {
+  name                     = "http-server-subnet"
+  ip_cidr_range            = var.http-server-subnet-cidr-range
   region                   = var.region
   network                  = google_compute_network.vpc.name
   private_ip_google_access = true

@@ -16,8 +16,9 @@ module "http_server" {
   
   source  = "./modules/http_server"
  
-  project = var.project
-  region = var.region
-  subnet-name  = module.vpc.subnet-name
-  vpc-name  = module.vpc.subnet-name
+  service-project         = var.service-project
+  region                  = var.region
+  vpc-name                = module.vpc.vpc-name
+  http-server-subnet-name = module.vpc.http-server-subnet-name
+
 }

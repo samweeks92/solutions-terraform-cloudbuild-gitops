@@ -23,12 +23,30 @@ output "vpc-self-link" {
   value = google_compute_network.vpc.self_link
 }
 
-// Output the Self Link URL
+// Output the vpc id
 output "vpc-id" {
   value = google_compute_network.vpc.id
 }
 
-// Output the subnet Name
-output "subnet-name" {
-  value = google_compute_subnetwork.subnetwork.name
+// Output the gke subnet name
+output "gke-subnet-name" {
+  value = google_compute_subnetwork.gke-subnet.name
 }
+
+// Output the gke subnet range
+output "gke-subnet-cidr-range" {
+  value = google_compute_subnetwork.gke-subnet.ip_cidr_range
+}
+
+// Output the http-server subnet name
+output "http-server-subnet-name" {
+  value = google_compute_subnetwork.http-server-subnet.name
+}
+
+// Output the http-server subnet range
+output "http-server-subnet-cidr-range" {
+  value = google_compute_subnetwork.http-server-subnet.ip_cidr_range
+}
+
+
+

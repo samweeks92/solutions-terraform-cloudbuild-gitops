@@ -65,5 +65,5 @@ steps:
   args: 
   - '-c'
   - | 
-    terraform apply -var host-project=$_HOST_PROJECT_ -var project=$_PROJECT_ -auto-approve
+    terraform apply -var host-project=$_HOST_PROJECT_ -var service-project=$_SERVICE_PROJECT_ -auto-approve
 # [END tf-apply]      

@@ -16,7 +16,8 @@
 # Define the Google Provider. Project will be passed via an TF_VAR_project
 # Environment Variable which is checked by Terraform as a last resort
 provider "google" {
-  project = var.project
+  # host-project = var.host-project
+  # service-project = var.service-project
 }
 
 # Retrieve an access token as the Terraform runner

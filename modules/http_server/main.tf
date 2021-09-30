@@ -13,7 +13,7 @@
 # limitations under the License.
 
 resource "google_compute_instance" "http_server" {
-  project      = var.project
+  project      = var.service-project
   zone         = "${var.region}-a"
   name         = "apache2-instance"
   machine_type = "f1-micro"
@@ -27,7 +27,7 @@ resource "google_compute_instance" "http_server" {
   }
 
   network_interface {
-    subnetwork = var.subnet-name
+    subnetwork = var.http-server-subnet-name
 
     access_config {
       # Include this section to give the VM an external ip address

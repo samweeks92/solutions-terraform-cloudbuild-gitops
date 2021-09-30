@@ -9,7 +9,7 @@ variable "host-project" {
 }
 
 # GCP Service Project to deploy resources
-variable "project" {
+variable "service-project" {
   type = string
 }
 
