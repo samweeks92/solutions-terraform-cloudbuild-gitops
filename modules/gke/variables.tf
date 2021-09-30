@@ -34,14 +34,14 @@ variable "gke-subnet-cidr-range" {
   description = "The CIDR range to use for the GKE Subnet"
 }
 
-variable "gke-pod-cidr-range" {
+variable "gke-secondary-pods-range-name" {
   type        = string
-  description = "The CIDR Range to use for GKE Pods (VPC Native Networking)"
+  description = "The CIDR Range name to use for GKE Pods (VPC Native Networking)"
 }
 
-variable "gke-services-cidr-range" {
+variable "gke-secondary-services-range-name" {
   type        = string
-  description = "The CIDR Range to use for GKE Services (VPC Native Networking)"
+  description = "The CIDR Range name to use for GKE Services (VPC Native Networking)"
 }
 
 variable "master-authorised-networks-list" {

@@ -48,5 +48,12 @@ output "http-server-subnet-cidr-range" {
   value = google_compute_subnetwork.http-server-subnet.ip_cidr_range
 }
 
+# // Output the secondary pod ip range name
+# output "http-server-subnet-secondary-pods-range-name" {
+#   value = google_compute_subnetwork.http-server-subnet.secondary_ip_range[0].range_name
+# }
 
-
+# // Output the secondary services ip range name
+# output "http-server-subnet-secondary-services-range-name" {
+#   value = google_compute_subnetwork.http-server-subnet.secondary_ip_range[1].range_name
+# }

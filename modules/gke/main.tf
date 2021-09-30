@@ -20,8 +20,8 @@ resource "google_container_cluster" "gke-cluster" {
   subnetwork                = var.gke-subnet-name
 
   ip_allocation_policy {
-    cluster_ipv4_cidr_block  = var.gke-pod-cidr-range
-    services_ipv4_cidr_block = var.gke-services-cidr-range
+    cluster_secondary_range_name  = var.gke-secondary-pods-range-name
+    services_secondary_range_name = var.gke-secondary-services-range-name
   }
 
   master_authorized_networks_config {

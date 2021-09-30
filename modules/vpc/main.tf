@@ -28,7 +28,17 @@ resource "google_compute_subnetwork" "gke-subnet" {
   region                   = var.region
   network                  = google_compute_network.tf-shared-vpc.name
   private_ip_google_access = true
+
+  secondary_ip_range {
+      range_name    = "gke-pods-cidr-range"
+      ip_cidr_range = "10.0.0.0/14"
+    }
+  secondary_ip_range {
+      range_name    = "gke-services-cidr-range"
+      ip_cidr_range = "10.4.0.0/20"
+    }
 }
+
 
 resource "google_compute_subnetwork_iam_member" "gke-subnet-member-cloudservices" {
   project = var.host-project
