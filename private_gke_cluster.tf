@@ -23,14 +23,14 @@ module "gke" {
   disable-http-load-balancing = false
 
   # Network Config
-  # vpc-name                          = module.vpc.vpc-name
-  vpc-name                          = "shared-vpc"
-  # gke-subnet-name                   = module.vpc.gke-subnet-name
-  gke-subnet-name                   = "subnet1"
-  # gke-secondary-pods-range-name     = "gke-pods-cidr-range"
-  # gke-secondary-services-range-name = "gke-services-cidr-range"
-  gke-secondary-pods-range-name     = "subnet1-pods"
-  gke-secondary-services-range-name = "subnet1-sevices"
+  vpc-name                          = module.vpc.vpc-name
+  # vpc-name                          = "shared-vpc"
+  gke-subnet-name                   = module.vpc.gke-subnet-name
+  # gke-subnet-name                   = "subnet1"
+  gke-secondary-pods-range-name     = "gke-pods-cidr-range"
+  gke-secondary-services-range-name = "gke-services-cidr-range"
+  # gke-secondary-pods-range-name     = "subnet1-pods"
+  # gke-secondary-services-range-name = "subnet1-sevices"
   master-authorised-networks-list   = { "allow-all" : "0.0.0.0/0" } # Required so Cloud Build can access GKE
   master-ipv4-cidr-range            = "172.16.0.32/28"
 
